@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using SwitchWalletSDK.Sdk.Services.Interfaces;
 
 namespace SwitchWalletSDK.Web.Controllers
 {
@@ -12,22 +13,19 @@ namespace SwitchWalletSDK.Web.Controllers
     };
 
         private readonly ILogger<WeatherForecastController> _logger;
+        private readonly ISwitchWalletClient _switchWalletClient;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public WeatherForecastController(ILogger<WeatherForecastController> logger, ISwitchWalletClient switchWalletClient)
         {
             _logger = logger;
+            _switchWalletClient = switchWalletClient;
         }
 
         [HttpGet(Name = "GetWeatherForecast")]
-        public IEnumerable<WeatherForecast> Get()
+        public IActionResult Get()
         {
-            return Enumerable.Range(1, 5).Select(index => new WeatherForecast
-            {
-                Date = DateTime.Now.AddDays(index),
-                TemperatureC = Random.Shared.Next(-20, 55),
-                Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-            })
-            .ToArray();
+           var yfgj = _switchWalletClient.GetTimedTransactionRecordAsync().Result;
+            return Ok(yfgj);
         }
     }
 }
