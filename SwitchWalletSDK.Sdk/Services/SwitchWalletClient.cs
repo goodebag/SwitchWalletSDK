@@ -51,5 +51,15 @@ namespace SwitchWalletSDK.Sdk.Services
         {
            return await _walletServices.OriginAccountBalanceAsync(publicKey);
         }
+
+        public async Task<RemittanceRecordResponse> RemittanceRecordAsync(OperationStatus? status = null, string toAddress = null, CurrencySymbol? currencySymbol = null, NetworkChain? networkChain = null, long? startTimeStamp = null, long? endTimeStamp = null, int? page = 1, int? pageSize = 30)
+        {
+            return await _walletServices.RemittanceRecordAsync(status, toAddress, currencySymbol, networkChain, startTimeStamp, endTimeStamp, page, pageSize);
+        }
+
+        public async Task<WalletBalanceTimeSeriesMetricsResponse> UnremittedTransactionAsync(GroupByCategory? currencyOrNetwork = null, GroupByPeriod? groupByPeriod = null, long? startTimeStamp = null, long? endTimeStamp = null)
+        {
+           return await _walletServices.UnremittedTransactionAsync(currencyOrNetwork, groupByPeriod,startTimeStamp, endTimeStamp);
+        }
     }
 }

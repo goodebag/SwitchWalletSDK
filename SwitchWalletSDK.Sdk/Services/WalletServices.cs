@@ -40,7 +40,336 @@ namespace SwitchWalletSDK.Sdk.Services
             get { return _baseUrl; }
             set { _baseUrl = value; }
         }
+        /// <param name="currencyOrNetwork">1 = Currency
+        /// <br/>
+        /// <br/>2 = Network</param>
+        /// <param name="groupByPeriod">1 = Day
+        /// <br/>
+        /// <br/>2 = Month
+        /// <br/>
+        /// <br/>3 = Year</param>
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public  Task<WalletBalanceTimeSeriesMetricsResponse> UnremittedTransactionAsync(GroupByCategory? currencyOrNetwork =null, GroupByPeriod? groupByPeriod = null, long? startTimeStamp = null, long? endTimeStamp = null)
+        {
+            return UnremittedTransactionAsync(currencyOrNetwork, groupByPeriod, startTimeStamp, endTimeStamp,  System.Threading.CancellationToken.None);
+        }
 
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <param name="currencyOrNetwork">1 = Currency
+        /// <br/>
+        /// <br/>2 = Network</param>
+        /// <param name="groupByPeriod">1 = Day
+        /// <br/>
+        /// <br/>2 = Month
+        /// <br/>
+        /// <br/>3 = Year</param>
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        private async Task<WalletBalanceTimeSeriesMetricsResponse> UnremittedTransactionAsync(GroupByCategory? currencyOrNetwork, GroupByPeriod? groupByPeriod, long? startTimeStamp, long? endTimeStamp, System.Threading.CancellationToken cancellationToken)
+        {
+
+            var urlBuilder_ = new System.Text.StringBuilder();
+            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/v2/analytics/unremitted-transaction?");
+          
+            if (currencyOrNetwork != null)
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("CurrencyOrNetwork") + "=").Append(System.Uri.EscapeDataString(ConvertToString(currencyOrNetwork, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            }
+            if (groupByPeriod != null)
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("GroupByPeriod") + "=").Append(System.Uri.EscapeDataString(ConvertToString(groupByPeriod, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            }
+            if (startTimeStamp != null)
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("StartTimeStamp") + "=").Append(System.Uri.EscapeDataString(ConvertToString(startTimeStamp, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            }
+            if (endTimeStamp != null)
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("EndTimeStamp") + "=").Append(System.Uri.EscapeDataString(ConvertToString(endTimeStamp, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            }
+           
+            urlBuilder_.Length--;
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    request_.Method = new System.Net.Http.HttpMethod("GET");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<WalletBalanceTimeSeriesMetricsResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
+        /// <summary>
+        /// Get Remittances Record
+        /// </summary>
+        /// <param name="status">0 = Pending
+        /// <br/>
+        /// <br/>1 = Successful
+        /// <br/>
+        /// <br/>2 = Failed
+        /// <br/>
+        /// <br/>3 = Initiated</param>
+        /// <param name="currencySymbol">1 = BTC
+        /// <br/>
+        /// <br/>2 = LTC
+        /// <br/>
+        /// <br/>3 = BNB
+        /// <br/>
+        /// <br/>4 = USDT
+        /// <br/>
+        /// <br/>5 = DAI
+        /// <br/>
+        /// <br/>6 = BUSD
+        /// <br/>
+        /// <br/>7 = XEND
+        /// <br/>
+        /// <br/>8 = ETH
+        /// <br/>
+        /// <br/>9 = MATIC
+        /// <br/>
+        /// <br/>10 = WNT
+        /// <br/>
+        /// <br/>11 = USDC
+        /// <br/>
+        /// <br/>12 = cUSD
+        /// <br/>
+        /// <br/>13 = cEUR
+        /// <br/>
+        /// <br/>14 = CELO
+        /// <br/>
+        /// <br/>15 = TRX
+        /// <br/>
+        /// <br/>16 = USDJ
+        /// <br/>
+        /// <br/>17 = TUSD</param>
+        /// <param name="networkChain">1 = BSC
+        /// <br/>
+        /// <br/>2 = ETHEREUM
+        /// <br/>
+        /// <br/>3 = POLYGON
+        /// <br/>
+        /// <br/>4 = CELO
+        /// <br/>
+        /// <br/>5 = ARBITRUM
+        /// <br/>
+        /// <br/>6 = AVALANCHE
+        /// <br/>
+        /// <br/>7 = HecoChain
+        /// <br/>
+        /// <br/>8 = TRON</param>
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        public Task<RemittanceRecordResponse> RemittanceRecordAsync(OperationStatus? status = null, string toAddress = null, CurrencySymbol? currencySymbol = null, NetworkChain? networkChain = null, long? startTimeStamp = null, long? endTimeStamp = null, int? page = 1, int? pageSize= 30)
+        {
+            return RemittanceRecordAsync(status, toAddress, currencySymbol, networkChain, startTimeStamp, endTimeStamp, page, pageSize, System.Threading.CancellationToken.None);
+        }
+
+        /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
+        /// <summary>
+        /// Get Remittances Record
+        /// </summary>
+        /// <param name="status">0 = Pending
+        /// <br/>
+        /// <br/>1 = Successful
+        /// <br/>
+        /// <br/>2 = Failed
+        /// <br/>
+        /// <br/>3 = Initiated</param>
+        /// <param name="currencySymbol">1 = BTC
+        /// <br/>
+        /// <br/>2 = LTC
+        /// <br/>
+        /// <br/>3 = BNB
+        /// <br/>
+        /// <br/>4 = USDT
+        /// <br/>
+        /// <br/>5 = DAI
+        /// <br/>
+        /// <br/>6 = BUSD
+        /// <br/>
+        /// <br/>7 = XEND
+        /// <br/>
+        /// <br/>8 = ETH
+        /// <br/>
+        /// <br/>9 = MATIC
+        /// <br/>
+        /// <br/>10 = WNT
+        /// <br/>
+        /// <br/>11 = USDC
+        /// <br/>
+        /// <br/>12 = cUSD
+        /// <br/>
+        /// <br/>13 = cEUR
+        /// <br/>
+        /// <br/>14 = CELO
+        /// <br/>
+        /// <br/>15 = TRX
+        /// <br/>
+        /// <br/>16 = USDJ
+        /// <br/>
+        /// <br/>17 = TUSD</param>
+        /// <param name="networkChain">1 = BSC
+        /// <br/>
+        /// <br/>2 = ETHEREUM
+        /// <br/>
+        /// <br/>3 = POLYGON
+        /// <br/>
+        /// <br/>4 = CELO
+        /// <br/>
+        /// <br/>5 = ARBITRUM
+        /// <br/>
+        /// <br/>6 = AVALANCHE
+        /// <br/>
+        /// <br/>7 = HecoChain
+        /// <br/>
+        /// <br/>8 = TRON</param>
+        /// <returns>Success</returns>
+        /// <exception cref="ApiException">A server side error occurred.</exception>
+        private  async Task<RemittanceRecordResponse> RemittanceRecordAsync(OperationStatus? status, string toAddress, CurrencySymbol? currencySymbol, NetworkChain? networkChain, long? startTimeStamp, long? endTimeStamp, int? page, int? pageSize,  System.Threading.CancellationToken cancellationToken)
+        {
+            var urlBuilder_ = new System.Text.StringBuilder();
+            urlBuilder_.Append(BaseUrl != null ? BaseUrl.TrimEnd('/') : "").Append("/api/v{version}/analytics/remittance-record?");
+            if (status != null)
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("Status") + "=").Append(System.Uri.EscapeDataString(ConvertToString(status, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            }
+            if (toAddress != null)
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("ToAddress") + "=").Append(System.Uri.EscapeDataString(ConvertToString(toAddress, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            }
+            if (currencySymbol != null)
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("CurrencySymbol") + "=").Append(System.Uri.EscapeDataString(ConvertToString(currencySymbol, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            }
+            if (networkChain != null)
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("NetworkChain") + "=").Append(System.Uri.EscapeDataString(ConvertToString(networkChain, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            }
+            if (startTimeStamp != null)
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("StartTimeStamp") + "=").Append(System.Uri.EscapeDataString(ConvertToString(startTimeStamp, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            }
+            if (endTimeStamp != null)
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("EndTimeStamp") + "=").Append(System.Uri.EscapeDataString(ConvertToString(endTimeStamp, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            }
+            if (page != null)
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("Page") + "=").Append(System.Uri.EscapeDataString(ConvertToString(page, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            }
+            if (pageSize != null)
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("PageSize") + "=").Append(System.Uri.EscapeDataString(ConvertToString(pageSize, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            }
+            urlBuilder_.Length--;
+
+            var client_ = _httpClient;
+            var disposeClient_ = false;
+            try
+            {
+                using (var request_ = new System.Net.Http.HttpRequestMessage())
+                {
+                    request_.Method = new System.Net.Http.HttpMethod("GET");
+                    request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
+
+                    var url_ = urlBuilder_.ToString();
+                    request_.RequestUri = new System.Uri(url_, System.UriKind.RelativeOrAbsolute);
+
+                    var response_ = await client_.SendAsync(request_, System.Net.Http.HttpCompletionOption.ResponseHeadersRead, cancellationToken).ConfigureAwait(false);
+                    var disposeResponse_ = true;
+                    try
+                    {
+                        var headers_ = System.Linq.Enumerable.ToDictionary(response_.Headers, h_ => h_.Key, h_ => h_.Value);
+                        if (response_.Content != null && response_.Content.Headers != null)
+                        {
+                            foreach (var item_ in response_.Content.Headers)
+                                headers_[item_.Key] = item_.Value;
+                        }
+                        var status_ = (int)response_.StatusCode;
+                        if (status_ == 200)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<RemittanceRecordResponse>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            return objectResponse_.Object;
+                        }
+                        else
+                        if (status_ == 400)
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ErrorDetails>(response_, headers_, cancellationToken).ConfigureAwait(false);
+                            if (objectResponse_.Object == null)
+                            {
+                                throw new ApiException("Response was null which was not expected.", status_, objectResponse_.Text, headers_, null);
+                            }
+                            throw new ApiException<ErrorDetails>("Bad Request", status_, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                        else
+                        {
+                            var responseData_ = response_.Content == null ? null : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                            throw new ApiException("The HTTP status code of the response was not expected (" + status_ + ").", status_, responseData_, headers_, null);
+                        }
+                    }
+                    finally
+                    {
+                        if (disposeResponse_)
+                            response_.Dispose();
+                    }
+                }
+            }
+            finally
+            {
+                if (disposeClient_)
+                    client_.Dispose();
+            }
+        }
         /// <summary>
         /// Starts a withdrawal process
         /// </summary>
