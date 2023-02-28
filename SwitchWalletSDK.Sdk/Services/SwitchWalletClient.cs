@@ -32,6 +32,11 @@ namespace SwitchWalletSDK.Sdk.Services
             return await _walletServices.GenerateWalletAddressAsync(body);
         }
 
+        public async Task<CurrencyModelIEnumerableApiResponseModel> GetActiveCurrenciesAsync()
+        {
+            return await _walletServices.GetActiveCurrenciesAsync();
+        }
+
         public async Task<TransactionRecordResponse> GetTimedTransactionRecordAsync(int? page = 1, int? pageSize = 30, long? startTimeStamp = null, long? endTimeStamp = null)
         {
            return await _walletServices.GetTimedTransactionRecordAsync(page, pageSize, startTimeStamp, endTimeStamp);
@@ -55,6 +60,21 @@ namespace SwitchWalletSDK.Sdk.Services
         public async Task<RemittanceRecordResponse> RemittanceRecordAsync(OperationStatus? status = null, string toAddress = null, CurrencySymbol? currencySymbol = null, NetworkChain? networkChain = null, long? startTimeStamp = null, long? endTimeStamp = null, int? page = 1, int? pageSize = 30)
         {
             return await _walletServices.RemittanceRecordAsync(status, toAddress, currencySymbol, networkChain, startTimeStamp, endTimeStamp, page, pageSize);
+        }
+
+        public async Task SetCurrencesAsync(IEnumerable<Guid> body)
+        {
+          await _walletServices.SetCurrencesAsync(body);
+        }
+
+        public async Task<CurrencyModelIEnumerableApiResponseModel> SupportedCurrenciesAsync()
+        {
+           return await _walletServices.SupportedCurrenciesAsync();
+        }
+
+        public async Task<NetworkModelIEnumerableApiResponseModel> SupportedNetworksAsync()
+        {
+            return await _walletServices.SupportedNetworksAsync();
         }
 
         public async Task<WalletBalanceTimeSeriesMetricsResponse> UnremittedTransactionAsync(GroupByCategory? currencyOrNetwork = null, GroupByPeriod? groupByPeriod = null, long? startTimeStamp = null, long? endTimeStamp = null)

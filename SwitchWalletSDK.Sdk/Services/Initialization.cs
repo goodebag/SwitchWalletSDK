@@ -13,7 +13,7 @@ namespace SwitchWalletSDK.Sdk.Services
 {
     public static class Initialization
     {
-        public static void AddSWitchWalletSdk(this IServiceCollection services, HttpClient httpClient,EnvironmentType environment = EnvironmentType.Sandbox)
+        public static void AddSwitchWalletSdk(this IServiceCollection services, HttpClient httpClient,EnvironmentType environment = EnvironmentType.Sandbox)
         {
             services.AddHttpClient();
             RegisterServices(services);

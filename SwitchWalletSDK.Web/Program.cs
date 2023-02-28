@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.DataProtection.KeyManagement;
 using SwitchWalletSDK.Sdk.Services;
 using System.Net.Http.Headers;
+using SwitchWalletSDK.Sdk.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,7 +13,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 var client = new HttpClient();
 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("ApiKey", "4699985358128149893");
-builder.Services.AddSWitchWalletSdk(client, SwitchWalletSDK.Sdk.Models.EnvironmentType.Sandbox);
+builder.Services.AddSwitchWalletSdk(client, EnvironmentType.Sandbox);
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

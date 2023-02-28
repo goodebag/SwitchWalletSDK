@@ -18,5 +18,9 @@ namespace SwitchWalletSDK.Sdk.Services.Interfaces
         Task<TransactionRecordResponse> GetTimedTransactionRecordAsync(int? page = 1, int? pageSize = 30, long? startTimeStamp = null, long? endTimeStamp = null);
         Task<RemittanceRecordResponse> RemittanceRecordAsync(OperationStatus? status = null, string toAddress = null, CurrencySymbol? currencySymbol = null, NetworkChain? networkChain = null, long? startTimeStamp = null, long? endTimeStamp = null, int? page = 1, int? pageSize = 30);
         Task<WalletBalanceTimeSeriesMetricsResponse> UnremittedTransactionAsync(GroupByCategory? currencyOrNetwork = null, GroupByPeriod? groupByPeriod = null, long? startTimeStamp = null, long? endTimeStamp = null);
+        Task<CurrencyModelIEnumerableApiResponseModel> GetActiveCurrenciesAsync();
+        Task<CurrencyModelIEnumerableApiResponseModel> SupportedCurrenciesAsync();
+        Task<NetworkModelIEnumerableApiResponseModel> SupportedNetworksAsync();
+        Task SetCurrencesAsync(IEnumerable<System.Guid> body);
     }
 }
