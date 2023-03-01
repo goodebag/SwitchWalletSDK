@@ -85,7 +85,7 @@ namespace SwitchWalletSDK.Web.Controllers
         }
         // POST api/<SDKController>
         [HttpPost]
-        public  IActionResult SetCurrenciesAsync([FromBody] IEnumerable<System.Guid> body)
+        public  IActionResult SetCurrenciesAsync([FromBody] IEnumerable<Guid> body)
         {
            _switchWalletClient.SetCurrencesAsync(body);
             return Ok("Sucess");

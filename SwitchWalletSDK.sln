@@ -5,8 +5,6 @@ VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SwitchWalletSDK.Sdk", "SwitchWalletSDK.Sdk\SwitchWalletSDK.Sdk.csproj", "{04E3FBB4-272E-4C99-A4EB-9F30164C33BF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SwitchWalletSDK.Test", "SwitchWalletSDK.Test\SwitchWalletSDK.Test.csproj", "{F3E51113-254C-494B-A7A0-2566604BE01F}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SwitchWalletSDK.Web", "SwitchWalletSDK.Web\SwitchWalletSDK.Web.csproj", "{C26883DA-0AEE-410C-ACCB-7CCB20E6B536}"
 EndProject
 Global
@@ -19,10 +17,6 @@ Global
 		{04E3FBB4-272E-4C99-A4EB-9F30164C33BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{04E3FBB4-272E-4C99-A4EB-9F30164C33BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{04E3FBB4-272E-4C99-A4EB-9F30164C33BF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F3E51113-254C-494B-A7A0-2566604BE01F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F3E51113-254C-494B-A7A0-2566604BE01F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F3E51113-254C-494B-A7A0-2566604BE01F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F3E51113-254C-494B-A7A0-2566604BE01F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C26883DA-0AEE-410C-ACCB-7CCB20E6B536}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C26883DA-0AEE-410C-ACCB-7CCB20E6B536}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C26883DA-0AEE-410C-ACCB-7CCB20E6B536}.Release|Any CPU.ActiveCfg = Release|Any CPU
